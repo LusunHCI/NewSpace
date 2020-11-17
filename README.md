@@ -7,6 +7,6 @@
 
 
 ## Back end: Go to the folder => backend
-### In the terminal run:
+### First, start the server. In the terminal run:
 ### python manage.py runserver
 ### then you can go to  http://localhost:8000/api/newspaces/ to interact with the database
