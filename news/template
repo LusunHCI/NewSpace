@@ -1,0 +1,24 @@
+x = {}
+
+x["article_title"] = r""
+
+x["article_link"] = r""
+
+x["media"] = r""
+
+x["media_political_view"] = r""
+
+x["event"] = r"Vaccine"
+
+x["event_link"] = r"https://ground.news/article/800df068-c3d7-4058-9369-95f655a0a797/us-panel-to-decide-who-should-get-the-first-covid-19-shots"
+
+x["category"] = r"COVID"
+
+x["abstract"] = r""
+
+x["content"] = r"""
+"""
+
+import json
+with open("/Users/alex/Desktop/NewSpace/news/{}.json".format(x['article_title']), "w") as outfile:
+    json.dump(x, outfile, indent=4)
