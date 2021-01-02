@@ -1,13 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from . import views
 
+# router will auto config urls for viewsets
+router = routers.DefaultRouter()                      # add this
+router.register(r'newspaces', views.NewspaceView, 'newspace')     # add this
+router.register(r'article', views.ArticleView, 'article')
+router.register(r'event', views.EventView, 'event')
+router.register(r'category', views.CategoryView, 'category')
+
 urlpatterns = [
-    # path('', views.NewspaceView.as_view(), name='homepage'),
-    path('category/', views.CategoryView.as_view(), name='category'),
-    path('event/', views.EventView.as_view(), name='event'),
-    path('', views.ArticleView.as_view(), name='article')
-    # path('category/<int:pk>', views.CategoryView, name='category'),
-    # path('<int:category_id>/<int:event_id>', views.EventView, name='event'),
-    # path('<int:category_id>/<int:event_id>/<int:article_id>', views.ArticleView, name='article')
+    path('api/', include(router.urls))
 ]
