@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Newspace, Article, Event, Category, User, Source, Author
 
+# Serializer is used to convert data into JSON
 class NewspaceSerializer(serializers.ModelSerializer):
   class Meta:
     model = Newspace
@@ -14,7 +15,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
   class Meta:
     model = Event
-    fields = ('id', 'title', 'pub_date', 'popularity_score')
+    fields = ('id', 'title', 'pub_date', 'popularity_score', 'category')
   
 class CategorySerializer(serializers.ModelSerializer):
   class Meta:
