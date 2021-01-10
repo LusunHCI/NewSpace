@@ -23,4 +23,7 @@ class CategoryView(viewsets.ModelViewSet):
   serializer_class = serializers.CategorySerializer
   queryset = models.Category.objects.all()
 
+class UserView(viewsets.ModelViewSet):
+  serializer_class = serializers.UserSerializer
+  queryset = models.User.objects.all()
 
