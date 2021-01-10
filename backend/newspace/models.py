@@ -30,7 +30,7 @@ class Source(models.Model):
 
 class Event(models.Model):
   title = models.CharField(max_length=200)
-  category = models.ManyToManyField('Category')
+  categories = models.ManyToManyField('Category', related_name='events')
   pub_date = models.DateTimeField('publish date')
   popularity_score = models.FloatField(default=0.0)
   
@@ -39,15 +39,15 @@ class Event(models.Model):
 
 class Article(models.Model):
   title = models.CharField(max_length=200)
-  event = models.ManyToManyField(Event)
-  authors = models.ManyToManyField(Author)
+  events = models.ManyToManyField(Event, related_name='articles')
+  authors = models.ManyToManyField(Author, related_name='articles')
   pub_date = models.DateTimeField('publish_date')
   read_count = models.IntegerField(default=0)
   agree_count = models.IntegerField(default=0)
   disagree_count = models.IntegerField(default=0)
   location = models.CharField(max_length=200)
   content = models.CharField(max_length=100000)
-  source = models.ForeignKey(Source, on_delete=models.CASCADE)
+  source = models.ForeignKey(Source, on_delete=models.CASCADE, related_name='articles')
   
   def __str__(self):
     return self.title
