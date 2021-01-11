@@ -56,7 +56,7 @@ function TopNewsContainer() {
         let count = 8,
           idx = 0;
         while (count >= 0 && start + idx < response.data.length) {
-          var cat = catMap[response.data[start + idx].category[0]];
+          var cat = catMap[response.data[start + idx].categories[0]];
           switch (cat) {
             case "International":
               if (internation.length < 2) {

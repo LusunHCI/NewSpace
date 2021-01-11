@@ -23,7 +23,7 @@ function CatNewsContainer(props) {
         let start = 6,
           idx = 0;
         while (start + idx < response.data.length) {
-          var cat = catMap[response.data[start + idx].category[0]];
+          var cat = catMap[response.data[start + idx].categories[0]];
           console.log(cat);
           if (cat == target) {
             title.push(response.data[start + idx]);

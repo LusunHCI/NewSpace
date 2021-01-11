@@ -6,21 +6,47 @@ class NewspaceSerializer(serializers.ModelSerializer):
   class Meta:
     model = Newspace
     fields = ('id', 'title', 'description', 'completed')
-  
-class ArticleSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Article
-    fields = ('id', 'title', 'pub_date', 'source', 'read_count', 'agree_count', 'disagree_count', 'content', 'location')
 
 class EventSerializer(serializers.ModelSerializer):
+  articles = serializers.SlugRelatedField(
+    many=True,
+    slug_field='title',
+    queryset = Article.objects.all()
+  )
+
   class Meta:
     model = Event
-    fields = ('id', 'title', 'pub_date', 'popularity_score', 'category')
+    fields = ('id', 'title', 'pub_date', 'popularity_score', 'categories', 'articles')
   
 class CategorySerializer(serializers.ModelSerializer):
+  events = serializers.SlugRelatedField(
+    many=True,
+    slug_field='title',
+    queryset = Event.objects.all()
+  )
+
   class Meta:
     model = Category
-    fields = ('id', 'name')
+    fields = ('id', 'name', 'events')
+
+class ArticleSerializer(serializers.ModelSerializer):
+  # event = serializers.SlugRelatedField(
+  #   many=True,
+  #   slug_field='title',
+  #   queryset = Event.objects.all()
+  # )
+  events = EventSerializer(many=True)
+
+  class Meta:
+    model = Article
+    fields = ('id', 'title', 'events', 'pub_date', 'source', 'read_count', 'agree_count', 'disagree_count', 'content', 'location')
+
+  def create(self, validated_data):
+    events_data = validated_data.pop('events')
+    article = Article.objects.create(**validated_data)
+    for event_data in events_data:
+      Event.objects.create(**event_data)
+    return article
 
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
