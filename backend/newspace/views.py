@@ -41,13 +41,14 @@ class EventView(viewsets.ModelViewSet):
   
   @action(detail=True)
   def sample_an_article(self, request, pk=None):
+    """ Sample a random article from the event. """
     obj = self.get_object()
     articles = obj.articles.all()
     
     if len(articles) > 0:
       random_id = random.randint(0, len(articles)-1)
       article = articles[random_id]
-      response = HttpResponseRedirect(reverse('article-detail', kwargs={'pk': article.id}))
+      response = HttpResponseRedirect(reverse('article-detail', kwargs={'pk': article.pk}))
       return response
     else:
       return Response(data = 'No articles in this event.')
