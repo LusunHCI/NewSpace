@@ -58,6 +58,17 @@ class CategoryView(viewsets.ModelViewSet):
   serializer_class = serializers.CategorySerializer
   queryset = models.Category.objects.all()
 
+  def retrieve(self, request, *args, **kwargs):
+      return super().retrieve(request, *args, **kwargs)
+  
+  @action(detail=True)
+  def get_popular_events(self, request, pk=None):
+    """ Return the most popular events in this category. """
+    obj = self.get_object()
+    events = obj.events.order_by('-popularity_score')
+    event_url_list = [reverse('event-detail', kwargs={'pk': event.pk}) for event in events]
+    return Response(data = event_url_list)
+
 class UserView(viewsets.ModelViewSet):
   serializer_class = serializers.UserSerializer
   queryset = models.User.objects.all()
